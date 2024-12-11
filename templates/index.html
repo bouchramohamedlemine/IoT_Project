@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventilation Insights - Updates Every 15 Minutes</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            color: #0056b3;
+        }
+
+        #action {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .chart-section {
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            width: 90%;
+        }
+
+        canvas {
+            max-width: 900px;
+            height: 400px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 40px;
+        }
+
+        #predictedPM2_5 {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ventilation Insights</h1>
+        <p>Providing real-time data to optimize indoor air quality and ventilation.</p>
+    </header>
+
+    <div id="action">Determining the best action...</div>
+
+    <!-- Temperature Chart -->
+    <div class="chart-section">
+        <h2>Temperature Trends</h2>
+        <div class="chart-container">
+            <canvas id="tempChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Humidity Chart -->
+    <div class="chart-section">
+        <h2>Humidity Levels</h2>
+        <div class="chart-container">
+            <canvas id="humidityChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Air Quality Charts -->
+    <div class="chart-section">
+        <h2>Air Quality</h2>
+        <div class="chart-container">
+            <canvas id="airQualityChart1"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="airQualityChart2"></canvas>
+        </div>
+    </div>
+
+    <!-- Wind Speed Chart -->
+    <div class="chart-section">
+        <h2>Wind Speed</h2>
+        <div class="chart-container">
+            <canvas id="windSpeedChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Predicted PM2.5 -->
+    <div id="predictedPM2_5">Loading predicted PM2.5 levels...</div>
+
+    <footer>
+        &copy; 2024 Ventilation Insights. Data updates every 15 minutes.
+    </footer>
+
+    <script>
+        // Chart creation function
+        const createChart = (ctx, datasets) => new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Values'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Initialize all charts
+        const tempChart = createChart(document.getElementById('tempChart').getContext('2d'), [
+            { label: 'Indoor Temp (°C)', data: [], borderColor: 'rgba(255, 99, 132, 1)', fill: false },
+            { label: 'Outdoor Temp (°C)', data: [], borderColor: 'rgba(54, 162, 235, 1)', fill: false }
+        ]);
+
+        const humidityChart = createChart(document.getElementById('humidityChart').getContext('2d'), [
+            { label: 'Indoor Humidity (%)', data: [], borderColor: 'rgba(255, 159, 64, 1)', fill: false },
+            { label: 'Outdoor Humidity (%)', data: [], borderColor: 'rgba(75, 192, 192, 1)', fill: false }
+        ]);
+
+        const airQualityChart1 = createChart(document.getElementById('airQualityChart1').getContext('2d'), [
+            { label: 'PM10 (µg/m³)', data: [], borderColor: 'rgba(153, 102, 255, 1)', fill: false },
+            { label: 'PM2.5 (µg/m³)', data: [], borderColor: 'rgba(255, 206, 86, 1)', fill: false }
+        ]);
+
+        const airQualityChart2 = createChart(document.getElementById('airQualityChart2').getContext('2d'), [
+            { label: 'NO2 (µg/m³)', data: [], borderColor: 'rgba(54, 162, 235, 1)', fill: false },
+            { label: 'O3 (µg/m³)', data: [], borderColor: 'rgba(75, 192, 192, 1)', fill: false },
+            { label: 'CO (µg/m³)', data: [], borderColor: 'rgba(255, 99, 132, 1)', fill: false }
+        ]);
+
+        const windSpeedChart = createChart(document.getElementById('windSpeedChart').getContext('2d'), [
+            { label: 'Wind Speed (k/h)', data: [], borderColor: 'rgba(255, 159, 64, 1)', fill: false }
+        ]);
+
+        // Update charts and elements with fetched data
+        function fetchData() {
+            $.get('/get_weather_data', function(data) {
+                console.log("Received data:", data);
+
+                if (data && data.length > 0) {
+                    const recentData = data.slice(-10);
+
+                    recentData.forEach((reading) => {
+                        const timestamp = reading.timestamp;
+
+                        updateChart(tempChart, timestamp, [reading.indoor_temperature, reading.outdoor_temperature]);
+                        updateChart(humidityChart, timestamp, [reading.indoor_humidity, reading.outdoor_humidity]);
+                        updateChart(airQualityChart1, timestamp, [reading.outdoor_pm10, reading.outdoor_pm2_5]);
+                        updateChart(airQualityChart2, timestamp, [reading.outdoor_no2, reading.outdoor_o3, reading.outdoor_co]);
+                        updateChart(windSpeedChart, timestamp, [reading.wind_speed]);
+                    });
+
+                    const latestReading = data[data.length - 1];
+                    document.getElementById('predictedPM2_5').innerText = `Predicted PM2.5: ${latestReading.predicted_pm2_5} µg/m³`;
+                    document.getElementById('action').innerText = `Recommended action: ${latestReading.action_key}`;
+                }
+            });
+        }
+
+        // Periodic data fetch
+        fetchData();
+        setInterval(fetchData, 60000);
+
+        // Helper function for updating charts
+        function updateChart(chart, timestamp, values) {
+            chart.data.labels.push(timestamp);
+            chart.data.datasets.forEach((dataset, index) => {
+                dataset.data.push(values[index]);
+            });
+
+            if (chart.data.labels.length > 10) {
+                chart.data.labels.shift();
+                chart.data.datasets.forEach(dataset => dataset.data.shift());
+            }
+
+            chart.update();
+        }
+    </script>
+</body>
+</html>
