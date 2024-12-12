@@ -204,5 +204,5 @@ if __name__ == '__main__':
     connect_mqtt()
 
     start_background_task()  # Start the background task
-    app.run(debug=True)
+    app.run(debug=True, port=7070)
     
