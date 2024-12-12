@@ -264,26 +264,33 @@
         ]);
 
         // Update charts and elements with fetched data
+        let lastTimestamp = null; // Store the last fetched timestamp
+
+        // Function to fetch data and update the UI
         function fetchData() {
             $.get('/get_weather_data', function(data) {
-                console.log("Received data:", data);
-
                 if (data && data.length > 0) {
-                    const recentData = data.slice(-10);
-
-                    recentData.forEach((reading) => {
-                        const timestamp = reading.timestamp;
-
-                        updateChart(tempChart, timestamp, [reading.indoor_temperature, reading.outdoor_temperature]);
-                        updateChart(humidityChart, timestamp, [reading.indoor_humidity, reading.outdoor_humidity]);
-                        updateChart(airQualityChart1, timestamp, [reading.outdoor_pm10, reading.outdoor_pm2_5]);
-                        updateChart(airQualityChart2, timestamp, [reading.outdoor_no2, reading.outdoor_o3, reading.outdoor_co]);
-                        updateChart(windSpeedChart, timestamp, [reading.wind_speed]);
-                    });
-
                     const latestReading = data[data.length - 1];
-                    document.getElementById('predictedPM2_5').innerText = `Predicted PM2.5 concentration after 15 minutes = ${latestReading.predicted_pm2_5} µg/m³`;
-                    document.getElementById('action').innerText = `Current action: ${latestReading.action_text}`;
+
+                    // Check if the latest timestamp is different from the last fetched timestamp
+                    if (latestReading.timestamp !== lastTimestamp) {
+                        lastTimestamp = latestReading.timestamp; // Update the stored timestamp
+
+                        const recentData = data.slice(-10);
+
+                        recentData.forEach((reading) => {
+                            const timestamp = reading.timestamp;
+
+                            updateChart(tempChart, timestamp, [reading.indoor_temperature, reading.outdoor_temperature]);
+                            updateChart(humidityChart, timestamp, [reading.indoor_humidity, reading.outdoor_humidity]);
+                            updateChart(airQualityChart1, timestamp, [reading.outdoor_pm10, reading.outdoor_pm2_5]);
+                            updateChart(airQualityChart2, timestamp, [reading.outdoor_no2, reading.outdoor_o3, reading.outdoor_co]);
+                            updateChart(windSpeedChart, timestamp, [reading.wind_speed]);
+                        });
+
+                        document.getElementById('predictedPM2_5').innerText = `Predicted PM2.5 concentration after 15 minutes = ${latestReading.predicted_pm2_5} µg/m³`;
+                        document.getElementById('action').innerText = `Current action: ${latestReading.action_text}`;
+                    }
                 }
             });
         }
@@ -307,5 +314,6 @@
             chart.update();
         }
     </script>
+
 </body>
 </html>
