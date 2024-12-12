@@ -27,7 +27,7 @@ requests==2.32.3
 scikit-learn==1.6.0
 scipy==1.13.1
 six==1.17.0
-sklearn==1.0.2
+sklearn==1.2.2
 threadpoolctl==3.5.0
 tzdata==2024.2
 urllib3==2.2.3
