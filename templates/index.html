@@ -8,10 +8,70 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+        margin: 0 0 2-px 0;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #e0f7fa, #eaf6f8); /* Light pastel gradient */
+        background-size: 400% 400%;
+        animation: gradientAnimation 5s ease infinite;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
         }
+
+        @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+        }
+
+        /* Airflow particles container */
+        #air-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -1; /* Background effect */
+        }
+
+        /* Air-like particles */
+        .particle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(173, 216, 230, 0.6) 60%, rgba(144, 238, 144, 0.4) 100%);
+        border-radius: 50%;
+        animation: float 10s linear infinite;
+        box-shadow: 0 0 8px rgba(173, 216, 230, 0.5); /* Soft glow */
+        opacity: 0.8; /* Light airy feel */
+        }
+
+        @keyframes float {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100vh) translateX(calc(100vw - 50%));
+            opacity: 0;
+        }
+        }
+
+        /* Dynamic particle styling */
+        #air-particles .particle:nth-child(odd) {
+        animation-duration: 7s;
+        animation-delay: calc(-1s * var(--index));
+        }
+        #air-particles .particle:nth-child(even) {
+        animation-duration: 12s;
+        animation-delay: calc(-1s * var(--index));
+        }
+
+
 
         header {
             text-align: center;
@@ -23,8 +83,12 @@
             color: #0056b3;
         }
 
+        header p {
+            font-size: 1.5em;
+        }
+
         #action {
-            font-size: 20px;
+            font-size: 1.5em;
             font-weight: bold;
             text-align: center;
             margin-bottom: 30px;
@@ -39,36 +103,55 @@
             display: flex;
             justify-content: center;
             margin-bottom: 50px;
-            width: 90%;
         }
 
         canvas {
-            max-width: 900px;
-            height: 400px;
+            width: 90%;
+            margin: auto;
         }
 
         footer {
             text-align: center;
-            font-size: 0.9em;
+            font-size: 1em;
             color: #555;
             margin-top: 40px;
         }
 
-        #predictedPM2_5 {
-            font-size: 18px;
+        #predictedPM2_5 { 
+            font-size: 1.5em;
             color: #333;
-            margin-top: 20px;
+            margin: 2em 0 2em 0;
             text-align: center;
         }
+
     </style>
 </head>
 <body>
+    <div id="air-particles">
+        <!-- Particle instances -->
+        <div class="particle" style="--index: 1; left: 5%;"></div>
+        <div class="particle" style="--index: 2; left: 15%;"></div>
+        <div class="particle" style="--index: 3; left: 25%;"></div>
+        <div class="particle" style="--index: 4; left: 35%;"></div>
+        <div class="particle" style="--index: 5; left: 45%;"></div>
+        <div class="particle" style="--index: 6; left: 55%;"></div>
+        <div class="particle" style="--index: 7; left: 65%;"></div>
+        <div class="particle" style="--index: 8; left: 75%;"></div>
+        <div class="particle" style="--index: 9; left: 85%;"></div>
+        <div class="particle" style="--index: 10; left: 95%;"></div>
+      </div>
+      
+
+      
+
     <header>
         <h1>Ventilation Insights</h1>
-        <p>Providing real-time data to optimize indoor air quality and ventilation.</p>
+        <p>Providing data to optimize indoor air quality and ventilation. The data updates every 15 minutes.</p>
     </header>
 
     <div id="action">Determining the best action...</div>
+
+    <br>
 
     <!-- Temperature Chart -->
     <div class="chart-section">
@@ -78,6 +161,8 @@
         </div>
     </div>
 
+    <br>
+
     <!-- Humidity Chart -->
     <div class="chart-section">
         <h2>Humidity Levels</h2>
@@ -85,6 +170,13 @@
             <canvas id="humidityChart"></canvas>
         </div>
     </div>
+
+    <br>
+
+    <!-- Predicted PM2.5 -->
+    <div id="predictedPM2_5">Loading predicted PM2.5 levels...</div>
+
+    <br>
 
     <!-- Air Quality Charts -->
     <div class="chart-section">
@@ -97,6 +189,8 @@
         </div>
     </div>
 
+    <br>
+    
     <!-- Wind Speed Chart -->
     <div class="chart-section">
         <h2>Wind Speed</h2>
@@ -105,11 +199,8 @@
         </div>
     </div>
 
-    <!-- Predicted PM2.5 -->
-    <div id="predictedPM2_5">Loading predicted PM2.5 levels...</div>
-
     <footer>
-        &copy; 2024 Ventilation Insights. Data updates every 15 minutes.
+        &copy; 2024 Bouchra Mohamed Lemine. 
     </footer>
 
     <script>
@@ -148,8 +239,8 @@
 
         // Initialize all charts
         const tempChart = createChart(document.getElementById('tempChart').getContext('2d'), [
-            { label: 'Indoor Temp (°C)', data: [], borderColor: 'rgba(255, 99, 132, 1)', fill: false },
-            { label: 'Outdoor Temp (°C)', data: [], borderColor: 'rgba(54, 162, 235, 1)', fill: false }
+            { label: 'Indoor Temperature (°C)', data: [], borderColor: 'rgba(255, 99, 132, 1)', fill: false },
+            { label: 'Outdoor Temperature (°C)', data: [], borderColor: 'rgba(54, 162, 235, 1)', fill: false }
         ]);
 
         const humidityChart = createChart(document.getElementById('humidityChart').getContext('2d'), [
@@ -191,15 +282,15 @@
                     });
 
                     const latestReading = data[data.length - 1];
-                    document.getElementById('predictedPM2_5').innerText = `Predicted PM2.5: ${latestReading.predicted_pm2_5} µg/m³`;
-                    document.getElementById('action').innerText = `Recommended action: ${latestReading.action_key}`;
+                    document.getElementById('predictedPM2_5').innerText = `Predicted PM2.5 concentration after 15 minutes = ${latestReading.predicted_pm2_5} µg/m³`;
+                    document.getElementById('action').innerText = `Current action: ${latestReading.action_text}`;
                 }
             });
         }
 
         // Periodic data fetch
         fetchData();
-        setInterval(fetchData, 60000);
+        setInterval(fetchData, 5000);
 
         // Helper function for updating charts
         function updateChart(chart, timestamp, values) {
