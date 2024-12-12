@@ -247,5 +247,5 @@ if __name__ == '__main__':
     time.sleep(5) # wait for 5 seconds to receive the latest indoor data
 
     start_background_task()  # Start the background task
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
     
