@@ -187,7 +187,7 @@ def get_weather_data():
 # Start the Flask app
 if __name__ == '__main__':
     # Create or load the CSV file for storing weather data
-    csv_file_path = 'data_logs.csv'
+    csv_file_path = 'data_logging.csv'
 
     # Column headers for the CSV
     columns = ['timestamp', 'outdoor_temperature', 'outdoor_humidity', 'wind_speed', 'outdoor_pm2_5', 'outdoor_pm10', 'outdoor_co', 'outdoor_no2', 'outdoor_o3', 'predicted_pm2_5', 'indoor_temperature', 'indoor_humidity', 'action_key', 'action_text']
