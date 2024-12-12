@@ -16,6 +16,7 @@ import paho.mqtt.client as mqtt
 import json
 from utils import get_action, is_time_to_log, fetch_weather_data
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
