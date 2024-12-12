@@ -204,5 +204,6 @@ if __name__ == '__main__':
     connect_mqtt()
 
     start_background_task()  # Start the background task
-    app.run(debug=True, port=7070)
+    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port)
     
