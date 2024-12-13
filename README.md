@@ -19,7 +19,7 @@ The **Smart Ventilation System** is an IoT-based solution aimed at improving ind
 
 ## How It Works
 
-<img alt="setup diagram" src="setup.png" width="600" height="600" />
+<img alt="setup diagram" src="setup.png" width="700" height="600" />
 
 
 - The first ESP32 reads data from the sensors and sends it to the second ESP32 via LoRa.
