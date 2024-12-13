@@ -14,18 +14,12 @@ This repository contains the code and resources for the Smart Ventilation System
 ## Folders
 
 ### `data_collection_phase/`
-This folder contains the files related to the initial data collection phase of the project. It includes scripts or data necessary for gathering environmental data (such as air quality and temperature) for training and testing models.
+This folder contains the files related to the initial data collection phase of the project. It contains the python and C++ code used to log API data and sensor data over 8 days, as well as the python code that was used to analyse the data and develop the PM2.5 prediction model.
 
 ### `templates/`
-Contains HTML template files used by the Flask web application. These templates are rendered by the web app to display dynamic content to the user.
+Contains the index.html template file used by the Flask web application. This template is rendered by the web app to display dynamic content to the user.
 
 ## Files
-
-### `Actual_setup_images.png`
-This image provides a visual representation of the physical setup of the Smart Ventilation System, including how sensors, actuators, and microcontrollers are connected.
-
-### `README.md`
-This file contains important project information, including setup instructions, technology used, and use cases of the Smart Ventilation System.
 
 ### `app.py`
 The main Flask application that controls the web server. It handles requests, renders templates, communicates with the ESP32 via MQTT, and displays real-time data and analytics on the web interface.
@@ -37,7 +31,7 @@ A pre-trained random forest machine learning model saved using the `joblib` libr
 This file lists the Python libraries required to run the project. It allows users to easily install the necessary dependencies using `pip`.
 
 ### `utils.py`
-A Python utility script that contains helper functions used throughout the project. It could include functions for data processing, feature extraction, or other supportive tasks.
+A Python utility script that contains helper functions used throughout by the app.py script.  
 
 
 
