@@ -19,6 +19,9 @@ This folder contains the files related to the initial data collection phase of t
 ### `templates/`
 Contains the index.html template file used by the Flask web application. This template is rendered by the web app to display dynamic content to the user.
 
+### `Connect_webapp_and_ESP32/`
+This folder contains the C++ code that facilitates communication between the ESP32 microcontroller and the web application via MQTT. The code allows the microcontroller to send sensor data to the web app, while also receiving commands from the web app to control the buzzer based on air quality decisions.  
+
 ## Files
 
 ### `app.py`
