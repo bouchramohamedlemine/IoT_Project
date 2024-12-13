@@ -83,13 +83,10 @@ A Python utility script that contains helper functions used throughout by the ap
 
 
 ## Conclusion
-The Smart Ventilation System optimizes indoor air quality by leveraging real-time data analysis and automation. Through this IoT setup, ventilation is controlled efficiently, ensuring a healthier indoor environment with minimal energy usage.
+The Smart Ventilation System optimizes indoor air quality by leveraging real-time data analysis and automation. Through this IoT setup, ventilation can be controlled efficiently, ensuring a healthier indoor environment and minimal energy usage.
 
 
 
-
-
-For any further information, questions, or collaboration inquiries, feel free to contact us!
 
 ---
 
