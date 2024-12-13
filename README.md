@@ -6,6 +6,41 @@
 
 The **Smart Ventilation System** is an IoT-based solution aimed at improving indoor air quality and enhancing energy efficiency. The system leverages real-time data and predicted particulate matter (PM2.5) levels to send ventilation control commands. It is designed to make decisions based on a combination of a sensor, API, and data analysis. Due to hardware limitations, it currently uses a buzzer to emit different signals instead of more complex actuators.
 
+
+# Project Structure
+
+This repository contains the code and resources for the Smart Ventilation System project. Below is an explanation of each folder and file in the repository.
+
+## Folders
+
+### `data_collection_phase/`
+This folder contains the files related to the initial data collection phase of the project. It includes scripts or data necessary for gathering environmental data (such as air quality and temperature) for training and testing models.
+
+### `templates/`
+Contains HTML template files used by the Flask web application. These templates are rendered by the web app to display dynamic content to the user.
+
+## Files
+
+### `Actual_setup_images.png`
+This image provides a visual representation of the physical setup of the Smart Ventilation System, including how sensors, actuators, and microcontrollers are connected.
+
+### `README.md`
+This file contains important project information, including setup instructions, technology used, and use cases of the Smart Ventilation System.
+
+### `app.py`
+The main Flask application that controls the web server. It handles requests, renders templates, communicates with the ESP32 via MQTT, and displays real-time data and analytics on the web interface.
+
+### `random_forest_model.joblib`
+A pre-trained random forest machine learning model saved using the `joblib` library. This model is used to predict air quality and help in decision-making regarding ventilation control.
+
+### `requirements.txt`
+This file lists the Python libraries required to run the project. It allows users to easily install the necessary dependencies using `pip`.
+
+### `utils.py`
+A Python utility script that contains helper functions used throughout the project. It could include functions for data processing, feature extraction, or other supportive tasks.
+
+
+
 ## Features
 - **Air Quality Monitoring**: The system collects data from both indoor sensor and API to monitor air quality in real-time. This includes indoor and outdoor temperature and humidity, outdoor particulate matter (PM2.5, PM10), CO2, NO2 and O3 levels, and wind speed.
   
