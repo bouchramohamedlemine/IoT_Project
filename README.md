@@ -55,7 +55,7 @@ A Python utility script that contains helper functions used throughout by the ap
 
 - The first ESP32 reads data from the sensors and sends it to the second ESP32 via LoRa.
 - The second ESP32 sends the data to the web app via MQTT.
-- The web app processes the data, fetches additional data from the weather API, and makes decisions on how to control the ventilation system.
+- The web app processes the data, fetches additional data from the weather API, and makes decisions on how to control the ventilation.
 - The decisions are sent back to the second ESP32, which uses a buzzer to signal appropriate actions based on the web app's feedback.
 
 
@@ -72,16 +72,6 @@ A Python utility script that contains helper functions used throughout by the ap
 3. **Flask Web App**  
 
 5. **Buzzer**  
-
-## Technologies Used
-
-- **ESP32 Microcontrollers**: Serve as central units for collecting and transmitting sensor data and controlling the buzzer. 
-- **DHT11 Sensor**: measures the indoor temperature and humidity.
-- **LoRa Communication**: Used for low-power, long-range transmission of sensor data from one ESP32 to the other.
-- **MQTT**: A lightweight messaging protocol that enables communication between the second ESP32 microcontroller and the web app.
-- **Web App**: The front-end and back-end code that fetches and processes sensor and Weather API data, making decisions about ventilation control.
-- **Buzzer**: An actuator used to provide feedback based on the system's decisions, alerting users to change ventilation.
-- **Power Supply**: A stable power source, such as USB or battery, for powering the ESP32 modules and sensors.
 
  
 ## Use Cases
