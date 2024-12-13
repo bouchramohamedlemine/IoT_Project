@@ -21,13 +21,14 @@ The **Smart Ventilation System** is an IoT-based solution aimed at improving ind
 
 <img alt="setup diagram" src="setup.png" width="700" height="600" />
 
-
 - The first ESP32 reads data from the sensors and sends it to the second ESP32 via LoRa.
 - The second ESP32 sends the data to the web app via MQTT.
 - The web app processes the data, fetches additional information, and makes decisions on how to control the ventilation system.
 - The decisions are sent back to the second ESP32, which uses a buzzer to signal appropriate actions based on the web app's feedback.
 
-  
+
+<img alt="Actual setup images" src="Actual_setup_images.png" width="700" height="600" />
+
 
 ## System Components
 
