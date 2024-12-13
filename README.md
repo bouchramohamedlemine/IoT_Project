@@ -9,8 +9,6 @@ The **Smart Ventilation System** is an IoT-based solution aimed at improving ind
 
 # Project Structure
 
-This repository contains the code and resources for the Smart Ventilation System project. Below is an explanation of each folder and file in the repository.
-
 ## Folders
 
 ### `data_collection_phase/`
