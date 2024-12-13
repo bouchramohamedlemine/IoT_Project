@@ -57,7 +57,7 @@ A Python utility script that contains helper functions used by the `app.py` scri
 
 
 <p align="center">
-  <img alt="Actual setup images" src="Actual_setup_images.png" width="700" height="600" />
+  <img alt="Actual setup images" src="Actual_setup_image.png" width="700" height="600" />
 </p>
 
 ## System Components
