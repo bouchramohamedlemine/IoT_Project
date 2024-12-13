@@ -67,7 +67,7 @@ A Python utility script that contains helper functions used throughout by the ap
 
 1. **DHT11 Sensor**  
   
-2. **2 ESP32 Microcontrollers**  
+2. **Two ESP32 Microcontrollers**  
 
 3. **Flask Web App**  
 
