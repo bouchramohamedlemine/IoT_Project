@@ -88,8 +88,5 @@ The Smart Ventilation System optimizes indoor air quality by leveraging real-tim
 
 
 
----
-
-*This project was developed as part of an IoT coursework project to automate smart home environments using real-time sensor and API data and intelligent decision-making.* 
-
+ 
 
