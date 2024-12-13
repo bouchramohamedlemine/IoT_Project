@@ -32,7 +32,7 @@ A trained random forest machine learning model saved using the `joblib` library.
 This file lists the Python libraries required to run the project. It allows users to easily install the necessary dependencies using `pip`.
 
 ### `utils.py`
-A Python utility script that contains helper functions used by the app.py script.  
+A Python utility script that contains helper functions used by the `app.py` script.  
 
 
 
