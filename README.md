@@ -49,7 +49,9 @@ A Python utility script that contains helper functions used throughout by the ap
 
 ## How It Works
 
-<img alt="setup diagram" src="setup.png" width="700" height="600" />
+<p align="center">
+  <img alt="setup diagram" src="setup.png" width="700" height="600" />
+</p>
 
 - The first ESP32 reads data from the sensors and sends it to the second ESP32 via LoRa.
 - The second ESP32 sends the data to the web app via MQTT.
@@ -57,8 +59,9 @@ A Python utility script that contains helper functions used throughout by the ap
 - The decisions are sent back to the second ESP32, which uses a buzzer to signal appropriate actions based on the web app's feedback.
 
 
-<img alt="Actual setup images" src="Actual_setup_images.png" width="700" height="600" />
-
+<p align="center">
+  <img alt="Actual setup images" src="Actual_setup_images.png" width="700" height="600" />
+</p>
 
 ## System Components
 
